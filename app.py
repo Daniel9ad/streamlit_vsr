@@ -24,5 +24,5 @@ if uploaded_file is not None:
     st.video(roi['video'])
 
 # Camara
-st.header("Grabar")
-webrtc_streamer(key="sample")
+# st.header("Grabar")
+# webrtc_streamer(key="sample")
