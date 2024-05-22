@@ -1,0 +1,9 @@
+mediapipe
+torch
+torchaudio
+torchvision
+av
+omegaconf
+sentencepiece
+opencv-python
+scikit-image
