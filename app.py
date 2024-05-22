@@ -8,9 +8,6 @@ client = Client("Daniel31415/VSR-Castellano")
 
 st.header("Sistema de reconocimiento visual del habla VSR")
 
-# Camara
-#webrtc_streamer(key="sample")
-
 uploaded_file = st.file_uploader("Cargar video", type=['mp4'])
 if uploaded_file is not None:
     st.video(uploaded_file)
@@ -25,3 +22,6 @@ if uploaded_file is not None:
         )
     st.success(transcript)
     st.video(roi['video'])
+
+# Camara
+#webrtc_streamer(key="sample")
