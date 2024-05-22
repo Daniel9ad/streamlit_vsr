@@ -1,7 +1,7 @@
 import streamlit as st 
 import torchvision
 from gradio_client import Client, file
-#from streamlit_webrtc import webrtc_streamer
+from streamlit_webrtc import webrtc_streamer
 
 # Cliente huggingface
 client = Client("Daniel31415/VSR-Castellano")
@@ -24,4 +24,5 @@ if uploaded_file is not None:
     st.video(roi['video'])
 
 # Camara
-#webrtc_streamer(key="sample")
+st.header("Grabar")
+webrtc_streamer(key="sample")
