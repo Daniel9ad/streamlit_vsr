@@ -1,5 +1,4 @@
 import streamlit as st 
-import torchvision
 from gradio_client import Client, file
 from streamlit_webrtc import webrtc_streamer
 
