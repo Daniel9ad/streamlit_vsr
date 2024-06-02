@@ -1,23 +1,18 @@
-import streamlit as st
-from streamlit_webrtc import webrtc_streamer, VideoTransformerBase
+from streamlit_webrtc import webrtc_streamer
+import av
 
-class VideoTransformer(VideoTransformerBase):
-    def transform(self, frame):
-        # Aquí puedes agregar tu código para procesar los frames de video
-        return frame
+def video_frame_callback(frame):
+    img = frame.to_ndarray(format="bgr24")
 
-st.title("Prueba de Webcam con Streamlit-webrtc")
+    flipped = img[::-1,:,:]
 
-webrtc_ctx = webrtc_streamer(
-    key="example",
-    video_transformer_factory=VideoTransformer,
-    media_stream_constraints={
-        "video": True,
-        "audio": False
-    }
+    return av.VideoFrame.from_ndarray(flipped, format="bgr24")
+
+
+webrtc_streamer(
+    rtc_configuration={  # Add this config
+        "iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]
+    },
+    key="example", #
+    video_frame_callback=video_frame_callback
 )
-
-if webrtc_ctx.video_transformer:
-    st.write("Cámara iniciada correctamente.")
-else:
-    st.write("Esperando iniciar la cámara...")
