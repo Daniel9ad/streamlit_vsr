@@ -1,14 +1,5 @@
 import streamlit as st 
 
-st.code("""
-[theme]
-primaryColor="#F39C12"
-backgroundColor="#2E86C1"
-secondaryBackgroundColor="#AED6F1"
-textColor="#FFFFFF"
-font="monospace"
-""")
-
 st.title('Reconocimiento visual del habla')
 
 st.page_link("app.py", label="Home", icon="🏠")
