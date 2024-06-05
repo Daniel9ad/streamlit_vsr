@@ -33,6 +33,7 @@ import logging
 import os
 import av
 import numpy as np
+import queue
 
 import streamlit as st
 from twilio.base.exceptions import TwilioRestException
@@ -68,20 +69,16 @@ def get_ice_servers():
         )
         return [{"urls": ["stun:stun.l.google.com:19302"]}]
 
-    return token.ice_servers    
+    return token.ice_servers
 
-import queue
-
-video = []
-i = 0
-result_queue: "queue.Queue[List[Detection]]" = queue.Queue()
 
 def video_frame_callback(frame):
-    i += 1
-    image = frame.to_ndarray(format="bgr24")
-    # st.text(type(image))
-    # video.append(video)
-    return av.VideoFrame.from_ndarray(image, format="bgr24")
+    pass
+
+# result_queue: "queue.Queue[List[Detection]]" = queue.Queue()
+result_queue = queue.Queue()
+result_queue.put('hola')
+result_queue.put('Daniel')
 
 webrtc_ctx = webrtc_streamer(
     key="object-detection",
@@ -92,7 +89,7 @@ webrtc_ctx = webrtc_streamer(
     async_processing=True,
 )
 
-if st.checkbox("Show the detected labels", value=True):
+if st.checkbox("transcript", value=True):
     if webrtc_ctx.state.playing:
         labels_placeholder = st.empty()
         # NOTE: The video transformation with object detection and
@@ -102,4 +99,4 @@ if st.checkbox("Show the detected labels", value=True):
         # are not strictly synchronized.
         while True:
             result = result_queue.get()
-            labels_placeholder.table(result)
+            labels_placeholder.text(result)
