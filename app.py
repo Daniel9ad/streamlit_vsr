@@ -77,7 +77,7 @@ def video_frame_callback(frame):
     i += 1
     image = frame.to_ndarray(format="bgr24")
     st.text(type(image))
-    video.append(video)
+    #video.append(video)
 
 webrtc_ctx = webrtc_streamer(
     key="object-detection",
