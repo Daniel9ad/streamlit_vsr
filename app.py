@@ -71,14 +71,22 @@ def get_ice_servers():
 
     return token.ice_servers
 
+i = 0
+texto = 'Daniel'
+
 
 def video_frame_callback(frame):
-    pass
+    i+=1
+    if i==100:
+        texto = f'{texto} 1 '
+    if i==200:
+        texto = f'{texto} 1 '
 
 # result_queue: "queue.Queue[List[Detection]]" = queue.Queue()
-result_queue = queue.Queue()
-result_queue.put('hola')
-result_queue.put('Daniel')
+# result_queue = queue.Queue()
+# result_queue.put('hola')
+# result_queue.put('Daniel')
+texto = 'Daniel'
 
 webrtc_ctx = webrtc_streamer(
     key="object-detection",
@@ -98,5 +106,5 @@ if st.checkbox("transcript", value=True):
         # Then the rendered video frames and the labels displayed here
         # are not strictly synchronized.
         while True:
-            result = result_queue.get()
-            labels_placeholder.text(result)
+            #result = result_queue.get()
+            labels_placeholder.text(texto)
