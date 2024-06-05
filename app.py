@@ -77,9 +77,9 @@ texto = 'Daniel'
 
 def video_frame_callback(frame):
     i+=1
-    if i==100:
+    if i==1000:
         texto = f'{texto} 1 '
-    if i==200:
+    if i==2000:
         texto = f'{texto} 1 '
 
 # result_queue: "queue.Queue[List[Detection]]" = queue.Queue()
