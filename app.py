@@ -80,14 +80,15 @@ texto = 'Daniel'
 frames = []
 
 def video_frame_callback(frame: av.VideoFrame) -> av.VideoFrame:
-    frames.append(frame.to_ndarray(format="bgr24"))
-    if i == 150:
-        i = 0
-    i+=1
-    if i==100:
-        texto = f'{texto} 1 '
-    if i==120:
-        texto = f'{texto} 1 '
+    # frames.append(frame.to_ndarray(format="bgr24"))
+    # if i == 150:
+    #     i = 0
+    # i+=1
+    # if i==100:
+    #     texto = f'{texto} 1 '
+    # if i==120:
+    #     texto = f'{texto} 1 '
+    pass
 
 
 # result_queue: "queue.Queue[List[Detection]]" = queue.Queue()
