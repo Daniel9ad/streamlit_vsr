@@ -31,6 +31,8 @@ from streamlit_webrtc import WebRtcMode, webrtc_streamer
 
 import logging
 import os
+import av
+import numpy as np
 
 import streamlit as st
 from twilio.base.exceptions import TwilioRestException
@@ -66,13 +68,22 @@ def get_ice_servers():
         )
         return [{"urls": ["stun:stun.l.google.com:19302"]}]
 
-    return token.ice_servers
+    return token.ice_servers    
+
+video = []
+i = 0
+
+def video_frame_callback(frame):
+    i += 1
+    image = frame.to_ndarray(format="bgr24")
+    st.text(type(image))
+    video.append(video)
 
 webrtc_ctx = webrtc_streamer(
     key="object-detection",
     mode=WebRtcMode.SENDRECV,
     rtc_configuration={"iceServers": get_ice_servers()},
-    #video_frame_callback=video_frame_callback,
+    video_frame_callback=video_frame_callback,
     media_stream_constraints={"video": True, "audio": False},
     async_processing=True,
 )
