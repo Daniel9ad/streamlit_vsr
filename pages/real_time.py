@@ -90,7 +90,6 @@ def video_frame_callback(frame: av.VideoFrame) -> av.VideoFrame:
 # result_queue = queue.Queue()
 # result_queue.put('hola')
 # result_queue.put('Daniel')
-texto = 'Daniel'
 
 webrtc_ctx = webrtc_streamer(
     key="object-detection",
