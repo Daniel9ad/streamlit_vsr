@@ -52,10 +52,10 @@ def get_ice_servers():
 
     # Ref: https://www.twilio.com/docs/stun-turn/api
     try:
-        # account_sid = "AC0e5bd9b0050252fee5d586318426381d"
-        # auth_token = "c09854cff0949b74ccb90eb002c858c8"
-        account_sid = os.environ["TWILIO_ACCOUNT_SID"]
-        auth_token = os.environ["TWILIO_AUTH_TOKEN"]
+        account_sid = "AC0e5bd9b0050252fee5d586318426381d"
+        auth_token = "c09854cff0949b74ccb90eb002c858c8"
+        # account_sid = os.environ["TWILIO_ACCOUNT_SID"]
+        # auth_token = os.environ["TWILIO_AUTH_TOKEN"]
     except KeyError:
         logger.warning(
             "Twilio credentials are not set. Fallback to a free STUN server from Google."  # noqa: E501
@@ -85,12 +85,22 @@ def infer():
     # Crear un objeto VideoWriter
     fourcc = cv2.VideoWriter_fourcc(*'mp4v') # Codec de video
     fps = 25.0 # Frames por segundo
-    video_writer = cv2.VideoWriter('output.mp4', fourcc, fps, (width, height))
+    video_writer = cv2.VideoWriter('clip.mp4', fourcc, fps, (width, height))
     # Escribir cada fotograma en el archivo de video
     for frame in frames:
         video_writer.write(frame)
     # Liberar el objeto VideoWriter
     video_writer.release()
+
+    # Prediccion
+    with st.spinner('Transcribiendo...'):
+        roi, transcript = client.predict(
+        	video_path={"video":file('clip.mp4')},
+        	api_name="/generar_resultados_demo"
+        )
+    # st.success(transcript)
+    # st.video(roi['video'])
+    texto = f'{texto} {transcript}'
 
 def video_frame_callback(frame: av.VideoFrame) -> av.VideoFrame:
     i+=1
