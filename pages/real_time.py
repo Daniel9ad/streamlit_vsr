@@ -46,7 +46,7 @@ def get_ice_servers():
     return token.ice_servers
 
 i = 0
-texto = 'Daniel'
+texto = ''
 frames = []
 
 def infer():
