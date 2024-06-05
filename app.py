@@ -34,6 +34,7 @@ import os
 import av
 import numpy as np
 import queue
+import cv2
 
 import streamlit as st
 from twilio.base.exceptions import TwilioRestException
@@ -71,24 +72,35 @@ def get_ice_servers():
 
     return token.ice_servers
 
-
-def infer():
-    pass
-
 i = 0
 texto = 'Daniel'
 frames = []
 
+def infer():
+    # Guardar archivo
+    # Obtener el tamaño del primer fotograma
+    height, width, channels = frames[0].shape
+    # Crear un objeto VideoWriter
+    fourcc = cv2.VideoWriter_fourcc(*'mp4v') # Codec de video
+    fps = 25.0 # Frames por segundo
+    video_writer = cv2.VideoWriter('output.mp4', fourcc, fps, (width, height))
+    # Escribir cada fotograma en el archivo de video
+    for frame in frames:
+        video_writer.write(frame)
+    # Liberar el objeto VideoWriter
+    video_writer.release()
+
 def video_frame_callback(frame: av.VideoFrame) -> av.VideoFrame:
-    # frames.append(frame.to_ndarray(format="bgr24"))
-    # if i == 150:
-    #     i = 0
+    i+=1
+    frames.append(frame.to_ndarray(format="bgr24"))
+    if i == 150:
+        i = 0
+        infer()
     # i+=1
     # if i==100:
     #     texto = f'{texto} 1 '
     # if i==120:
     #     texto = f'{texto} 1 '
-    pass
 
 
 # result_queue: "queue.Queue[List[Detection]]" = queue.Queue()
