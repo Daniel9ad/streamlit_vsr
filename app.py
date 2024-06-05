@@ -79,8 +79,9 @@ result_queue: "queue.Queue[List[Detection]]" = queue.Queue()
 def video_frame_callback(frame):
     i += 1
     image = frame.to_ndarray(format="bgr24")
-    st.text(type(image))
-    #video.append(video)
+    # st.text(type(image))
+    # video.append(video)
+    return av.VideoFrame.from_ndarray(image, format="bgr24")
 
 webrtc_ctx = webrtc_streamer(
     key="object-detection",
