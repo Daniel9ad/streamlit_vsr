@@ -71,16 +71,24 @@ def get_ice_servers():
 
     return token.ice_servers
 
+
+def infer():
+    pass
+
 i = 0
 texto = 'Daniel'
+frames = []
 
-
-def video_frame_callback(frame):
+def video_frame_callback(frame: av.VideoFrame) -> av.VideoFrame:
+    frames.append(frame.to_ndarray(format="bgr24"))
+    if i == 150:
+        i = 0
     i+=1
-    if i==1000:
+    if i==100:
         texto = f'{texto} 1 '
-    if i==2000:
+    if i==120:
         texto = f'{texto} 1 '
+
 
 # result_queue: "queue.Queue[List[Detection]]" = queue.Queue()
 # result_queue = queue.Queue()
