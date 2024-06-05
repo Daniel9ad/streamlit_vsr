@@ -4,8 +4,6 @@ from gradio_client import Client, file
 # Cliente huggingface
 client = Client("Daniel31415/VSR-Castellano")
 
-st.header("Sistema de reconocimiento visual del habla VSR")
-
 uploaded_file = st.file_uploader("Cargar video", type=['mp4'])
 if uploaded_file is not None:
     st.video(uploaded_file)
