@@ -24,7 +24,7 @@ def get_ice_servers():
     # Ref: https://www.twilio.com/docs/stun-turn/api
     try:
         account_sid = "AC0e5bd9b0050252fee5d586318426381d"
-        auth_token = "c09854cff0949b74ccb90eb002c858c8"
+        auth_token = "15f5e4274b051528962c7c1d470d76d4"
         # account_sid = os.environ["TWILIO_ACCOUNT_SID"]
         # auth_token = os.environ["TWILIO_AUTH_TOKEN"]
     except KeyError:
