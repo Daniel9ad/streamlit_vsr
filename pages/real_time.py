@@ -46,40 +46,40 @@ def get_ice_servers():
 
     return token.ice_servers
 
-i = 0
-texto = ''
-frames = []
+# i = 0
+# texto = ''
+# frames = []
 
-def infer():
-    # Guardar archivo
-    # Obtener el tamaño del primer fotograma
-    height, width, channels = frames[0].shape
-    # Crear un objeto VideoWriter
-    fourcc = cv2.VideoWriter_fourcc(*'mp4v') # Codec de video
-    fps = 25.0 # Frames por segundo
-    video_writer = cv2.VideoWriter('clip.mp4', fourcc, fps, (width, height))
-    # Escribir cada fotograma en el archivo de video
-    for frame in frames:
-        video_writer.write(frame)
-    # Liberar el objeto VideoWriter
-    video_writer.release()
+# def infer():
+#     # Guardar archivo
+#     # Obtener el tamaño del primer fotograma
+#     height, width, channels = frames[0].shape
+#     # Crear un objeto VideoWriter
+#     fourcc = cv2.VideoWriter_fourcc(*'mp4v') # Codec de video
+#     fps = 25.0 # Frames por segundo
+#     video_writer = cv2.VideoWriter('clip.mp4', fourcc, fps, (width, height))
+#     # Escribir cada fotograma en el archivo de video
+#     for frame in frames:
+#         video_writer.write(frame)
+#     # Liberar el objeto VideoWriter
+#     video_writer.release()
 
-    # Prediccion
-    with st.spinner('Transcribiendo...'):
-        roi, transcript = client.predict(
-        	video_path={"video":file('clip.mp4')},
-        	api_name="/generar_resultados_demo"
-        )
-    # st.success(transcript)
-    # st.video(roi['video'])
-    texto = f'{texto} {transcript}'
+#     # Prediccion
+#     with st.spinner('Transcribiendo...'):
+#         roi, transcript = client.predict(
+#         	video_path={"video":file('clip.mp4')},
+#         	api_name="/generar_resultados_demo"
+#         )
+#     # st.success(transcript)
+#     # st.video(roi['video'])
+#     texto = f'{texto} {transcript}'
 
-def video_frame_callback(frame: av.VideoFrame) -> av.VideoFrame:
-    i+=1
-    frames.append(frame.to_ndarray(format="bgr24"))
-    if i == 150:
-        i = 0
-        infer()
+# def video_frame_callback(frame: av.VideoFrame) -> av.VideoFrame:
+#     i+=1
+#     frames.append(frame.to_ndarray(format="bgr24"))
+#     if i == 150:
+#         i = 0
+#         infer()
     # i+=1
     # if i==100:
     #     texto = f'{texto} 1 '
@@ -92,23 +92,35 @@ def video_frame_callback(frame: av.VideoFrame) -> av.VideoFrame:
 # result_queue.put('hola')
 # result_queue.put('Daniel')
 
-webrtc_ctx = webrtc_streamer(
-    key="object-detection",
-    mode=WebRtcMode.SENDRECV,
-    rtc_configuration={"iceServers": get_ice_servers()},
-    video_frame_callback=video_frame_callback,
-    media_stream_constraints={"video": True, "audio": False},
-    async_processing=True,
-)
+# webrtc_ctx = webrtc_streamer(
+#     key="object-detection",
+#     mode=WebRtcMode.SENDRECV,
+#     rtc_configuration={"iceServers": get_ice_servers()},
+#     video_frame_callback=video_frame_callback,
+#     media_stream_constraints={"video": True, "audio": False},
+#     async_processing=True,
+# )
 
-if st.checkbox("transcript", value=True):
-    if webrtc_ctx.state.playing:
-        labels_placeholder = st.empty()
-        # NOTE: The video transformation with object detection and
-        # this loop displaying the result labels are running
-        # in different threads asynchronously.
-        # Then the rendered video frames and the labels displayed here
-        # are not strictly synchronized.
-        while True:
-            #result = result_queue.get()
-            labels_placeholder.text(texto)
+# if st.checkbox("transcript", value=True):
+#     if webrtc_ctx.state.playing:
+#         labels_placeholder = st.empty()
+#         # NOTE: The video transformation with object detection and
+#         # this loop displaying the result labels are running
+#         # in different threads asynchronously.
+#         # Then the rendered video frames and the labels displayed here
+#         # are not strictly synchronized.
+#         while True:
+#             #result = result_queue.get()
+#             labels_placeholder.text(texto)
+
+
+
+def video_frame_callback(frame):
+    img = frame.to_ndarray(format="bgr24")
+
+    flipped = img[::-1,:,:] if flip else img
+
+    return av.VideoFrame.from_ndarray(flipped, format="bgr24")
+
+
+webrtc_streamer(key="example", video_frame_callback=video_frame_callback)
