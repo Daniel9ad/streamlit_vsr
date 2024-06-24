@@ -33,7 +33,7 @@ def get_ice_servers():
     #     )
     #     return [{"urls": ["stun:stun.l.google.com:19302"]}]
     account_sid = "AC0e5bd9b0050252fee5d586318426381d"
-    auth_token = "f11293c98abaaf8bae033939c7a979c5"
+    auth_token = "0d3beb4f7db6e5dcaf551f51497178bf"
     client = Client(account_sid, auth_token)
 
     try:
