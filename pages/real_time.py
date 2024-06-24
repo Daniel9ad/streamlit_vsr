@@ -6,7 +6,7 @@ import os
 import av
 import numpy as np
 import queue
-import cv2
+# import cv2
 
 from twilio.base.exceptions import TwilioRestException
 from twilio.rest import Client
