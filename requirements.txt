@@ -1,4 +1,5 @@
 gradio_client
 streamlit-webrtc
-opencv-python-headless==4.8.1.78
+opencv-python
 twilio~=8.10.1
+av==9.2.0
